@@ -45,10 +45,8 @@ namespace PackagingService.Api.Controllers
 
             // Validate input string (json)
             var validInput = _validateInput.Validate(value);
-            if (validInput != null)
-            {
-                Response.StatusCode = 400; //Bad Request
-            }
+            if (validInput == null)
+                return Problem(null, null, statusCode: 400, "Invalid input string", null); //Bad Request
 
             // Call service
             var result = _packageSortingService.CalculatePackage(validInput);
